@@ -1,0 +1,78 @@
+stages:
+  - test
+  - lint
+  - build
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+  PYTHON_VERSION: "3.11"
+
+cache:
+  paths:
+    - .pip-cache/
+    - .venv/
+
+before_script:
+  - python --version
+  - python -m venv .venv
+  - source .venv/bin/activate  # Linux/Mac
+  - # .\.venv\Scripts\Activate.ps1  # Windows
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
+test:
+  stage: test
+  script:
+    - python -m pytest tests/ -v --cov=. --cov-report=xml
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - coverage.xml
+    expire_in: 1 week
+
+lint:
+  stage: lint
+  script:
+    - pip install black flake8 mypy
+    - black --check --diff .
+    - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+    - mypy . --ignore-missing-imports
+
+build:
+  stage: build
+  script:
+    - echo "Building bike chatbot application..."
+    - python -c "import bikes, intents, llm, main, streamlit_app; print('All modules imported successfully')"
+  artifacts:
+    paths:
+      - .venv/
+    expire_in: 1 hour
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploying to staging environment..."
+    - echo "Streamlit app would be deployed to staging server"
+  environment:
+    name: staging
+    url: https://staging-bike-chatbot.example.com
+  only:
+    - develop
+
+deploy_production:
+  stage: deploy
+  script:
+    - echo "Deploying to production environment..."
+    - echo "Streamlit app would be deployed to production server"
+  environment:
+    name: production
+    url: https://bike-chatbot.example.com
+  only:
+    - main
+  when: manual
