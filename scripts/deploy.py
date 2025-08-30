@@ -126,7 +126,7 @@ class Deployer:
         
         # Health check
         if not self.run_command(
-            "curl -f http://localhost:3000/_stcore/health",
+            "curl -f  http://localhost:3000/_stcore/health",
             "Health check",
             check=False
         ):

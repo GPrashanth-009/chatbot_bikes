@@ -7,7 +7,7 @@ name = "bike-chatbot"
 version = "0.1.0"
 description = "An AI-powered chatbot for bike purchasing assistance"
 readme = "README.md"
-license = {text = "MIT"}
+license = {text = "GNU Affero General Public License v3"}
 authors = [
     {name = "Bike Chatbot Team", email = "team@bikechatbot.com"}
 ]
@@ -18,7 +18,7 @@ keywords = ["chatbot", "bike", "ai", "streamlit", "openai"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
