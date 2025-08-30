@@ -6,6 +6,7 @@ from typing import List, Dict, Any, Optional
 from dotenv import load_dotenv
 
 try:
+    
     from openai import OpenAI
 except Exception:  # pragma: no cover - if openai not installed yet
     OpenAI = None  # type: ignore
