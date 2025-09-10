@@ -1,0 +1,6 @@
+online food ordering system(OFOS)
+to handle menu browsing,food ordering,payments and delivery tracking
+give me the abstract
+functional requirments and non functional requirments
+who are the diff type of users that would interact with the system and how would each use it?
+how would u break this into modules
